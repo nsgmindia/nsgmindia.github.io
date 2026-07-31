@@ -341,6 +341,9 @@
 					if($(window).scrollTop()>100) {$('#backToTop').fadeIn(300)} else {$('#backToTop').fadeOut(300)}
 				});
 				$(window).click(function() {window.scrollTo({ top: 0, behavior: 'smooth' });});
+				if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+				$(document).ready(function () { $(window).scrollTop(0); });
+				$(window).on('load', function () { $(window).scrollTop(0); });
 			});
 		});
 	});
