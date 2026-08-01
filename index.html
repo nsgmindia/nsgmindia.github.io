@@ -2,12 +2,13 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-	<title>State Wise Smart Meters</title>
+	<link rel="icon" type="image/x-icon" href="assets/favicon.png">
+	<title>Smart Metering in India</title>
 	<link rel="stylesheet" type="text/css" href="assets/jquery.dataTables-1.13.4.min.css">
 	<script type="text/javascript" src="assets/chartjs-4.3.0.umd.min.js"></script>
 	<style>
-		body { font-family: Segoe UI, Arial, sans-serif; background: linear-gradient(135deg, #eef4ff, #f8fbff); margin: auto; max-width: 1600px; padding: 20px; color: #1f2937; }
+		@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+		body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(135deg, #eef4ff, #f8fbff); margin: auto; max-width: 1600px; padding: 20px; color: #1f2937; }
 		.header { background: linear-gradient(135deg, #6d28d9, #10b981); width: 100%; color:#fff; text-align: center; font-size: 28px; font-weight:bolder; border-radius:18px; padding:10px; box-shadow:0 8px 24px rgba(37,99,235,0.25); border:1px solid rgba(255,255,255,0.15); }
 		.progress { width: 100%; height: 40px; margin: auto; overflow: hidden; border-radius: 10px; }
 		.progress-bar { float: left; height: 100%; line-height: 18px; padding: 2px; text-align: center; background-color: #d3d3d3; box-sizing: border-box; font-weight: bold; }
@@ -15,18 +16,18 @@
 		.progress-bar-striped.active { animation: progress-bar-stripes 1s linear infinite; }
 		.bar1 { background-color: #16a34a; color: #fff; }
 		.bar2 { background-color: #d97706; color: #fff; }
-		.bar3 { background-color: #dc2626; color: #fff; }
-		.bar4 { background-color: #3443e3; color: #fff; }
+		.bar3 { background-color: #de4b4b; color: #fff; }
+		.bar4 { background-color: #3f4ef2; color: #fff; }
 		@keyframes progress-bar-stripes { 0% { background-position-x: 1rem; } }
 		.flex-row { display: flex; flex-direction: row; width: 100%; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
 		.flex-column { flex: 1; min-width: 350px; background: #fff; border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; transition: 0.3s; }
 		.flex-column:hover { transform: translateY(-4px); }
-		.success, .warning, .danger, .blues, .mint { margin: 10px; text-align: center; color: #fff; padding: 10px; border-radius: 10px; }
+		.success, .warning, .danger, .blues, .seablue { margin: 10px; text-align: center; color: #fff; padding: 10px; border-radius: 10px; }
 		.success { background: linear-gradient(135deg, #16a34a, #22c55e); }
 		.warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
-		.danger { background: linear-gradient(135deg, #dc2626, #ef4444); }
-		.blues { background: linear-gradient(135deg, #3443e3, #4a58f0); }
-		.mint { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+		.danger { background: linear-gradient(135deg, #de4b4b, #f57676); }
+		.blues { background: linear-gradient(135deg, #3f4ef2, #5462f7); }
+		.seablue { background: linear-gradient(135deg, #2b5876, #4e4376); }
 		.sub-columns { display: flex; justify-content: space-between; align-items: center; margin: auto 20px; }
 		h4 { margin: 5px 0; font-size: 18px; }
 		.Count { font-weight: 700; font-size: 20px; }
@@ -46,10 +47,11 @@
 		#graph1, #graph2, #graph3 { max-height: 230px; max-width: 460px; margin: 15px 20px; }
 		.mapSource { display: inline-flex; align-items: center; gap: 8px; position: relative; left: 250px; top: 10px; margin: 10px; font-size: 12px; }
 		#mapIndia { width: 100%; height: auto;filter: drop-shadow(0 0 1px maroon); }
+		.legend-container { margin: -40px 20px 20px 20px; }
 		#legend { max-width: 350px; margin: 30px 0; }
 		path { fill: #cbd5e1; stroke: #fff; stroke-width: 1.2; transition: 0.25s; }
 		path:hover { fill: #2563eb !important; cursor: pointer; filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.4)); }
-		.infoBox { position: absolute; pointer-events:none; max-width: 400px; background: #fff; font-size: 12px; padding: 10px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); display: none; z-index: 999; }
+		.infoBox { position: absolute; pointer-events:none; max-width: 400px; background: #fff; font-size: 12px; padding: 10px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); display: none; z-index: 99; }
 		.abbr { text-align: center; font-size: 11px; }
 		table { font-size: 11px; }
 		td { padding: 1px !important; }
@@ -57,14 +59,44 @@
 		.table-card { flex: 1; min-width: 0; margin: 1px; }
 		.right-card { border-left: 1px solid gray; padding-left: 5px; }
 		.topTotal, .topMonthly { font-size: 14px; max-width: 180px; }
+		.tab {display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin: 2px 0; }
+		.tablinks { display: flex; align-items: center; gap: 5px; min-width: 350px; justify-content: center; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: bold; background: #fff; border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; transition: 0.3s; }
+		.tablinks:hover { transform: translateY(-4px); }
+		.tablinks.active { background: linear-gradient(135deg, #2b5876, #4e4376, #2b5876); color: #fff; }
+		.tabcontent { background: #fff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+		img { max-width: 2rem; margin-right: 5px; }
+		.text-center { display: flex; align-items: center; justify-content: center; }
+		.bg-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; }
+		.bg-warning { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; }
+		.bg-danger { background: linear-gradient(135deg, #dc2626, #ef4444); color: #fff; }
+		.bg-success-footer1 { background-color: #e8f3ed; color: #000; }
+		.bg-success-footer2 { background-color: #a3cfba; color: #000; }
+		.bg-warning-footer1 { background-color: #fff8e6; color: #000; }
+		.bg-warning-footer2 { background-color: #ffe083; color: #000; }
+		.bg-danger-footer1 { background-color: #fbeaec; color: #000; }
+		.bg-danger-footer2 { background-color: #ed9aa2; color: #000; }
 		.legend { width: 300px; height: 10px; }
-		#backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 99; display: none; width: 50px; height: 50px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 25px; font-weight:bolder; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; }
+		.outline-excel, .outline-pdf { font-family: inherit; display: flex; align-items: center; cursor: pointer; border: none; border-radius: 5px; padding: 5px 10px; margin: 5px; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+		.outline-excel { background: #16a34a; }
+		.outline-pdf { background: #dc2626; }
+		.dataTables_length, .dataTables_filter { margin: 5px!important; }
+		#tableConsumer thead th, #tableConsumer tbody td, #tableConsumer tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
+		#tableDT thead th, #tableDT tbody td, #tableDT tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
+		#tableFeeder thead th, #tableFeeder tbody td, #tableFeeder tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
+		ol { padding-inline-start: 10px; margin-block-start: 0px; margin-block-end: 0px; }
+		.rarr { visibility: hidden; top: -30px; position: absolute; }
+		.tooltip { position: relative; display: inline-block; border-bottom: 1px dotted black; }
+		.tooltip .tooltiptext { top: -10px; left: 100%; visibility: hidden; min-width: 150px; text-align: left; margin-left: 10px; border: 1px solid teal; background-color: #fafad2; color: blue; padding: 10px; border-radius: 10px; position: absolute; z-index: 99; }
+		.tooltip:hover .tooltiptext { visibility: visible; cursor: pointer; }
+		.footer1 { position: relative; top: -28px; }
+		.footer2 { position: relative; top: 26px; }
+		#backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 99; display: none; width: 50px; height: 50px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 25px; font-weight: bolder; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; }
 		#backToTop:hover { background: #007bff; transform: translateY(-5px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);}
 	</style>
 </head>
 <body>
 	<div class="flex-row">
-		<span class="header">⚡Glance of State Wise Smart Metering Deployments <p class="abbr">National Overview of Smart Consumer, DT and Feeder Metering Progress</p></span>
+		<span class="header">⚡ Smart Meter Deployments in India <br><h4>National Overview of Smart Consumer, DT and Feeder Meters Deployment Progress</h4></span>
 	</div>
 	<div class="infoBox"></div>
 	<div class="flex-row">
@@ -80,7 +112,7 @@
 			</div>
 		</div>
 		<div class="flex-column">
-			<h4 class="warning">DT Metering</h4>
+			<h4 class="warning">Distribution Transformer Metering</h4>
 			<div class="sub-columns">
 				<div class="sub-column">
 					<h4 class="sancColor"><img class="icon" src="assets/sanction.png">Sanctioned: <span id="dSanc" class="Count">...</span></h4><h4 class="awardColor"><img class="icon" src="assets/awarded.png">Awarded: <span id="dAward" class="Count">...</span></h4><h4 class="instColor"><img class="icon" src="assets/install.png">Installed: <span id="dInst" class="Count">...</span></h4><h4 class="balColor"><img class="icon" src="assets/ongoing.png">Balance: <span id="dBal" class="Count">...</span></h4>
@@ -156,7 +188,7 @@
 				<path id="2" title="Andhra Pradesh" d="M368.924,531.643l-0.152,-0.75l-0.339,0.529l-1.576,0.117l-0.072,-0.873l-1.125,0.693l2.169,0.916l0,0l-0.029,1.241l0.566,0.167l0.828,1.793l-9.549,4.51l-5.859,2.223l-4.691,-1.279l-3.877,0.443l-3.333,1.598l-3.245,6.869l0.123,1.162l-3.631,3.719l-0.341,0.558l0.479,1.045l-1.184,1.003l-3.783,0.493l-1.082,-1.766l0.326,-0.935l0.466,0.007l-0.146,-0.697l-3.1,-1.046l-3.906,0.727l-2.782,1.286l-2.388,1.523l-1.823,1.969l-1.808,5.402l-2.65,4.073l-1.343,6.07l1.743,9.046l2.2,3.756l-1.808,12.185l3.006,7.893l-0.217,4.697l2.062,5.388l-3.769,-6.688l-0.705,-0.311l-0.145,2.316l-0.77,-0.756l0.443,-0.747l-0.501,-0.095l-1.46,2.244l2.891,2.577l1.959,0.044l1.975,1.712l0,0l0.002,1.386l-0.945,-0.516l-1.193,-2.293l-2.045,-0.053l-2.16,-1.536l-1.969,0.208l-0.103,0.511l1.112,0.216l0.086,0.454l-0.787,-0.086l-0.275,0.74l-0.876,0.214l0.036,0.873l-0.804,0.354l0.551,0.791l-0.733,0.997l-1.943,0.85l-1.33,-0.022l-0.536,0.581l-0.672,-0.541l-0.857,0.799l1.663,1.274l-1.06,0.746l-0.563,-0.703l-0.891,0.378l0.19,-0.693l-0.594,0.115l-0.125,-1.371l-2.307,0.956l-0.824,-0.568l-0.338,-1.149l-2.795,-0.327l-1.418,0.538l1.318,0.566l-0.371,1.81l0.66,-0.464l0.246,0.343l-0.624,0.215l0.056,0.551l-1.987,0.638l0.177,0.871l-1.219,0.857l-1.059,-1.158l-1.283,0.147l-0.001,0.828l-0.767,0.504l-0.947,2.022l-2.187,-0.18l-2.339,-1.63l-1.704,0.229l-0.547,0.854l0.815,0.43l-1.117,-0.027l-0.154,-1.737l-3.399,1.066l-1.139,-0.281l-0.228,1.353l-1.114,-0.354l-0.979,1.021l0.864,1.564l-0.549,-0.005l-1.144,3.88l-0.952,0.702l0.056,1.525l-0.609,0.154l-0.22,-0.624l0,0l0,0l0,0l-0.143,0.046l-0.447,-0.045l-0.127,1.051l-0.808,0.027l0.051,1.173l-2.386,0.146l-2.036,-1.074l-0.68,-1.019l-1.949,0.275l0.977,-0.885l-0.172,-0.978l0,0l0.535,-2.479l1.621,0.006l1.106,-2.115l0.86,0.859l1.502,-0.144l-0.344,-1.775l0.922,0.139l-0.166,-1.783l1.386,-0.555l-0.07,-0.756l0.681,-0.41l-0.502,-0.583l1.577,-0.964l-0.735,-0.803l0.725,-0.444l0.229,-1.511l-0.57,-0.978l-0.911,1.146l-1.283,-1.368l-0.935,0.25l-0.301,-0.542l-0.868,0.402l-0.634,-0.428l0.794,-0.321l-1.103,-0.595l0.931,-5.829l-4.263,-0.237l-1.162,0.806l0.279,-1.563l-0.874,-0.188l-0.125,-0.661l-1.961,0.349l-0.585,-0.827l0.149,-0.554l1.081,0.099l0.104,-0.676l-0.639,-0.606l0.87,-1.137l-0.122,-1.672l-1.893,-1.198l-0.087,0.886l-1.376,-0.229l-0.507,1.084l-0.554,0.006l-0.056,-1.576l0.93,-0.343l-0.303,-1.496l-1.434,1.395l-0.643,-0.888l-1.796,-0.097l-0.312,0.686l0.559,1.256l-1.352,0.646l0.064,0.602l-1.715,0.585l-0.107,1.509l-0.346,-0.749l-0.832,0.24l0.17,-0.661l-0.552,0.044l-1.01,0.532l0.687,0.528l-0.405,0.206l-0.67,-0.425l-1.034,0.71l-0.951,-0.716l-0.192,1.521l-0.653,-0.551l-0.115,0.708l-0.867,0.103l0.201,-3.17l-1.275,-0.058l0.415,-0.938l-1.701,-0.274l-1.032,0.521l-0.342,-0.824l-1.477,0.466l-0.434,-1.451l-0.583,0.877l-0.172,-0.517l-0.684,0.559l-0.046,-1.506l-0.551,0.459l0.171,1.119l-1.009,0.2l1.003,0.749l0.113,1.727l-1.864,-0.162l-0.92,0.575l-0.881,-0.853l-0.39,1.012l-0.493,-0.256l-0.633,-1.877l1.278,-2.064l0.627,-0.106l-0.142,-0.736l-2.738,-2.539l1.148,-1.112l-1.255,-1.619l-1.132,-0.1l0.203,-0.731l1.191,-0.181l0.122,-0.612l2.044,0.435l-0.301,1.949l0.402,1.173l2.546,0.29l0.686,1.321l4.343,-0.867l1.053,1.11l-0.142,2.242l1.101,-0.029l0.037,0.466l0.93,-0.768l-0.515,-0.703l0.599,-0.854l-1.438,-0.01l0.202,-1l-1.495,-0.406l1.811,-2.104l-0.149,-0.396l-1.181,0.589l0.083,-0.74l0.757,-0.136l0.34,-0.934l2.894,0.374l-0.108,-3.158l-1.086,-0.01l-0.323,-0.982l-1.482,-0.396l-0.278,0.776l1.064,2.177l-0.834,0.526l-0.742,-1l0.101,-1.026l-2.083,-0.177l0.041,-1.438l-1.287,0.524l-2.086,-0.699l-1.051,1.314l-0.179,1.941l-0.778,0.103l-0.672,-0.79l-2.922,-0.015l-0.339,-0.838l0.66,-0.571l-1.856,-1.369l0.105,-1.146l0.783,-0.608l0.745,0.366l0.058,-1.191l0.774,-0.867L227,590.35l-1.114,-1.428l-0.728,-0.12l-1.034,-1.942l0.991,-3.468l-0.464,-1.166l1.789,-0.647l0.41,-4.184l-0.955,0.341l-1.677,-0.493l0.544,-1.222l-0.271,-1.431l0.594,-0.508l2.085,1.624l2.747,0.479l0.494,-0.503l1.208,0.009l-0.154,0.622l0.989,0.142l1.966,-3.15l-0.574,-0.579l0.669,-0.164l0.012,-1.173l-0.974,-0.717l1.131,-0.988l-0.425,-0.695l-0.849,-0.109l-0.15,-0.979l-1.258,0.143l-0.893,-2.962l-1.49,-1.457l0.04,-0.403l1.429,0.165l0.07,-3.497l1.364,-0.498l0.909,0.726l0.229,-0.888l-2.137,-1.972l0.54,-2.317l-1.088,-0.226l1.142,-1.767l2.025,-1.079l2.758,-0.448l6.811,0.966l0,0l2.533,0.237l1.374,0.921l1.495,-0.264l2.171,0.556l2.313,-0.8l2.985,0.96l0.9,-1.12l0.715,1.504l1.2,0.455l0.425,-0.569l1.016,-0.002l0.401,-1.346l1.515,-0.747l0.488,-2.673l1.557,0.058l2.338,-1.355l4.011,0.643l1.514,-1.112l2.526,1.89l1.604,0.079l1.606,-1.668l0.035,-1.813l0.656,0.095l0.254,1.123l0.988,0.13l-0.132,-2.005l0.524,-0.534l2.756,-1.135l3.808,0.748l1.101,-0.589l0.172,-7.02l1.067,-1.394l4.195,-0.549l1.845,-1.255l3.943,-0.823l3.316,-1.766l0.924,1.021l1.349,-0.202l1.052,1.578l1.466,-0.11l2.346,-2.695l0.569,-1.789l-0.957,-1.016l-1.083,-0.281l0.468,-1.151l0.949,-1.518l2.3,-0.523l1.262,-1.558l0.5,0.831l1.592,0.066l1.024,1.43l0.467,2.22l1.029,0.42l0.375,1.146l0.7,-1.01l1.383,0.899l0.099,0.662l2.782,0.709l1.08,-0.65l-1.295,-0.969l0.272,-1.156l0.569,-0.128l-0.067,-1.374l-2.427,-0.567l-0.091,0.804l-3.387,-1.392l0.797,-1.134l-0.568,-1.11l0.735,-0.55l0.665,1.379l0.672,0.203l0.94,-0.869l0.363,-1.506l1.675,-0.787l2.522,1.314l-0.446,0.852l2.251,-0.247l2.791,1.018l0.689,-0.658l0.3,-2.495l1.124,0.008l-0.208,-1.444l2.245,0.563l1.445,-0.892l3.039,-0.49l0.49,-2.344l2.238,0.058l1.504,-1.846l1.231,0.874l1.146,-0.115l2.033,-2.28l0.209,-2.367l0.583,-0.793l-0.543,-0.526l1.784,-2.562l0.143,-1l5.378,-2.767l0.271,-0.538l-0.901,-1.067l0,0l1.118,-1.116l3.939,-1.465l1.906,-1.719l3.547,0.373l0.445,0.863l1.681,0.806l0.668,-0.174l-0.008,-1.618l0.809,-0.357l0.199,0.632l0.634,-0.068l0.093,-2.666l0.633,0.452l0.198,-0.382l-1.543,-1.463l0.698,-0.525l0.107,-1.319l0.914,-0.206l0.553,-0.845l-1.532,-0.28l1.308,-1.357l-0.605,-1.066l2.947,-3.319l0.657,0.918l0.627,-0.057l0.183,1.82l0.618,-0.088l-0.486,1.257l1.708,0.545l0.282,0.582l-0.911,1.036l0.113,0.959l1.206,1.082l0.835,-1.512l2.829,-1.165l0.686,-1.668l-0.446,-0.646l0.6,-0.515l1.196,0.773l1.038,-0.077l0.189,1.198l1.068,0.405l2.208,-0.865l0.947,0.24l0.127,-1.405l-0.544,0.264l-0.577,-0.665l1.933,-2.444l-1.486,-0.261l-0.146,-0.523l0.708,-0.485l-1.201,-0.051l0.092,-1.323l1.03,-0.395l2.144,-3.093l1.797,0.79l0.088,0.689l0.375,-1.305l1.22,0.229l0.351,-0.853l2.007,-0.274l0.068,-0.834l0.978,0.034l0.393,-0.748l-1.691,-1.766l0.878,0.094l-0.901,-0.884l-0.438,1.05l-0.621,-1.902l1.074,-0.527l1.634,0.358l1.219,1.321l-0.182,-1.412l0.682,-0.017l0.087,-0.548l-0.485,-1.267l0.362,-0.211l0.533,0.644l0.308,-0.305l0.216,1.045l-0.526,-0.051l0.049,0.409l0.94,0.148l0.394,-1.789l0.845,0.629l0.67,-1.004l-0.264,-0.84l0.758,-0.87l1.927,3.584l0.684,0.121l-0.456,0.697l1.047,1.752l0.895,0.273l-1.059,-1.848l1.241,-0.783l2.173,4.965l1.82,0.571l2.281,-0.146l1.43,1.503l1.077,-0.093l0.743,-0.719l4.728,-0.426l0.099,-1.952l0.69,0.41l0.239,-0.423l-0.525,-0.419l0.946,0.145l-0.584,-0.485l0.85,0.265l0.826,-0.721l-0.361,-0.637l0.655,-0.755l-0.667,-1.228l1.478,0.854l0.464,-1.038l2.005,-1.152l0.563,1.359l0.655,-1.094l1.092,0.067l-0.008,-0.753l-0.899,0.119l-0.731,-1.238l1.813,0.053l0.1,-0.912l0.969,0.146l-0.216,0.826l0.658,0.62l0,0l1.097,0.641l-4.655,5.099l-0.756,2.187l-2.302,2.076l-2.868,4.088l-6.026,5.365l-0.029,1.104l-10.595,5.112l-3.833,2.498l-1.125,1.801l-3.122,2.761v0.871l-1.714,2.228l-3.427,3.509l-15.836,7.703l-6.252,4.64l-1.852,2.245l-0.675,2.403l-0.596,0.275l0.189,1.146l1.452,1.214l1.111,-0.298l-0.297,2.97L368.924,531.643L368.924,531.643L368.924,531.643zM369.738,531.595l-0.486,2.975l-0.94,-1.288l-0.02,-0.96L369.738,531.595L369.738,531.595L369.738,531.595z"/>
 				<path id="1" title="Andaman and Nicobar" d="M643.09,726.915l0.986,1.359l0.132,1.397l-1.074,0.569l-1.511,-0.195l-0.283,-2.332l1.198,-0.044l0.188,-1.067L643.09,726.915L643.09,726.915L643.09,726.915L643.09,726.915zM670.755,779.876l0.958,0.38l0.131,3.063l1.57,2.287l-0.887,-0.029l0.825,1.154l-0.717,0.232l-0.545,1.171l0.128,2.331l-0.511,0.528l-0.828,-0.608L670.254,792l-0.577,-0.267l0.279,-1.35l-0.757,-0.39l-0.151,-1.548l-1.016,-0.908l0.087,-0.966l-1.344,-1.392l-0.806,0.223l-0.151,-2.429l0.456,-0.338l-0.5,-0.334l0.799,-1.692l1.241,0.072l0.704,-0.711l1.097,0.341l0.114,-0.842l1.076,-0.175l0,0l0,0L670.755,779.876zM649.406,613.749l0.408,1.255l-0.27,2.354l0.276,0.819l0.421,-0.449l0.247,0.393l-0.407,0.624l0.923,1.21l-0.647,0.858l-0.863,-1.104l-0.771,-0.212l-0.359,0.518l-0.506,-0.696l-0.515,0.427l1.541,0.624l0.079,1.134l0.879,-0.139l-0.008,0.596l0.545,-0.349l-0.9,2.448l0.07,2.559l-0.81,1.371l-0.996,-0.17l0.23,0.579l-1.045,-1.257l-0.48,0.178l-0.382,0.847l0.963,1.32l-0.684,0.646l-0.142,-1.006l-0.645,0.061l-0.729,1.444l0.484,1.156l0,0l-0.784,0.182l0,0l-1.275,-0.996l-0.001,-1.86l0.631,-0.031l0.178,-0.678l-0.96,-0.147l0.218,-1.859l0.668,-0.182l-0.319,-0.797l0.979,-0.321l-0.987,-0.363l0.472,-2.185l0.697,-0.537l-0.835,-0.523l0.516,-0.646l-0.537,-0.203l0.464,-1.7l0.72,-0.281l-0.624,-0.436h0.646l0.429,-0.719l-0.327,-1.09l1.511,-0.793l-0.313,-0.907l1.235,-0.211l0.632,0.436l-0.029,-1.183l0.584,0.813L649.406,613.749L649.406,613.749L649.406,613.749L649.406,613.749zM662.399,753.391l0.491,0.877l-1.104,1.296l1.184,1.565l0.051,1.363l-0.515,-0.333l-0.58,0.394l-0.197,0.957l-0.406,-1.235l0.531,0.1l0.099,-0.503l0.226,0.338l0.309,-0.829l-1.172,0.698l0.115,-1.035l-0.783,-0.801l-0.145,-1.344L662.399,753.391L662.399,753.391L662.399,753.391L662.399,753.391zM649.051,611.063l0.313,1.285l-1.337,-0.732L649.051,611.063L649.051,611.063L649.051,611.063L649.051,611.063zM664.633,580.755l0.027,-0.996l0.743,-0.755l0,0l0,0L664.633,580.755zM648.101,629.6l0.088,0.849l-0.807,-0.157l0.203,-1.265l0.326,0.516l0.901,-0.726l0,0l0,0L648.101,629.6zM645.994,630.937l0.603,0.093l-0.44,0.715l0.6,0.031l0.684,2.005l-0.522,0.869l1.211,1.675l-0.587,1.756l0.271,3.813l-0.949,0.417l-0.026,0.389l0.701,-0.049l-1.114,0.627l-0.021,0.988l-2.201,-0.571l1.686,2.815l-1.63,0.458l-1.592,-0.448l-0.438,0.628l-0.896,-0.121l-0.549,-0.737l0.209,-7.017l-0.601,-0.293l0.515,0.018l1.285,-1.656l-0.66,-0.584L642,635.99l-0.58,-2.733l0.363,0.438l1.934,-2.36l0.815,0.635l0,0l0.784,-0.182l0,0L645.994,630.937L645.994,630.937L645.994,630.937L645.994,630.937zM640.683,628.947l0.633,0.355l0.042,2.351l-0.53,1.234l-0.675,0.139l0.355,0.5l-0.545,0.895l-0.523,-2.056l0.561,-2.628L640.683,628.947L640.683,628.947L640.683,628.947L640.683,628.947zM658.57,758.791l0.774,0.462l0.068,1.18l0.464,-0.153l0.916,0.988l-0.088,1.509l-1.023,-0.913l-1.729,0.479l-0.359,-0.782l0.403,-0.598l-1.068,0.211l0.248,-1.802L658.57,758.791L658.57,758.791L658.57,758.791L658.57,758.791zM667.276,773.981l1.117,2.189l-2.809,3.068l-0.712,-1.722l0.298,-1.627l2.128,-0.58L667.276,773.981L667.276,773.981L667.276,773.981L667.276,773.981zM641.082,633.206l0.177,2.878l-0.607,-2.055L641.082,633.206L641.082,633.206L641.082,633.206L641.082,633.206zM646.868,645.479l-0.34,-0.135l0.294,-1.32l0.648,0.012l0,0v-0.001L646.868,645.479zM662.943,758.704l0.928,0.951l-0.138,1.656l-1.837,-1.475l0.66,-1.053l0.479,0.751L662.943,758.704L662.943,758.704L662.943,758.704L662.943,758.704zM663.763,756.162l0.363,2.288l-0.814,-2.098L663.763,756.162L663.763,756.162L663.763,756.162L663.763,756.162zM670.588,646.49l0.929,0.855l0.143,1.345l-1.411,-0.215l-0.312,-1.057L670.588,646.49L670.588,646.49L670.588,646.49L670.588,646.49zM654.788,752.495l0.108,1.169l-0.505,-0.633L654.788,752.495L654.788,752.495L654.788,752.495L654.788,752.495zM642.798,646.765l1.597,0.452l0.75,-0.329l0.6,1.037l-0.796,0.525l0.565,1.326l-0.886,-0.067l0.109,1.046L644,650.552l-0.532,0.905l0.269,0.623l-1.251,1.141l-0.667,-0.821l0.804,-3.715l-0.722,-0.227l0.211,-0.739l0.37,0.262l0.45,-0.557L642.798,646.765L642.798,646.765L642.798,646.765L642.798,646.765zM651.938,750.135l0.449,0.244l-0.445,1.833l2.046,1.59l-0.137,0.566l-1.989,-0.704l-0.944,-1.271l0.196,-1.821L651.938,750.135L651.938,750.135L651.938,750.135L651.938,750.135zM649.785,747.063l0.355,0.894l-0.581,-0.248L649.785,747.063L649.785,747.063L649.785,747.063L649.785,747.063zM646.601,648.839l-0.539,-1.498l0.66,0.201l0.201,-0.785l0.182,0.779l0,0l0,0L646.601,648.839zM664.738,744.443l0.692,2.745l-0.412,0.035l-0.1,1.192L664.738,744.443L664.738,744.443L664.738,744.443L664.738,744.443zM646.067,648.188l0.308,0.854l-0.569,-0.279l-0.124,0.546l-0.204,-0.742L646.067,648.188L646.067,648.188L646.067,648.188L646.067,648.188zM635.981,683.692l0.378,0.846l0.042,-0.516l0.69,0.567l0.054,1.624l0.714,0.371l0.238,2.84l-1.485,1.714l0.77,0.887l-1.474,1.756l-2.047,-0.957l-1.293,0.419l0.922,-2.155l-1.052,-1.38l-0.111,-2.983l0.561,0.552l1.554,-2.637l1.113,-0.767l0.289,0.563L635.981,683.692L635.981,683.692L635.981,683.692L635.981,683.692zM641.754,649.172l0.462,-0.016l-0.151,0.894l-0.657,-0.109L641.754,649.172L641.754,649.172L641.754,649.172L641.754,649.172zM639.265,667.681l1.159,1.923l-0.952,0.768l1.153,0.52l-0.068,0.446l-2.325,0.632l-0.542,-0.537l0.154,-0.884l0.938,-0.127l-0.243,-1.799L639.265,667.681L639.265,667.681L639.265,667.681L639.265,667.681zM650.67,648.028l0.232,0.646l0.505,-0.6l-0.137,1.472l-0.978,-0.66L650.67,648.028L650.67,648.028L650.67,648.028L650.67,648.028zM637.753,667.045l0.231,-1.121l0.123,0.933l0,0l0,0L637.753,667.045zM649.183,658.972l1.342,0.203l-0.58,0.61l-0.894,-0.421L649.183,658.972L649.183,658.972L649.183,658.972L649.183,658.972zM647.842,653.996l0.337,-0.258l0.706,0.645l1.164,3.025l-0.296,0.546l-1.105,-1.776l-0.68,0.048l-1.277,-1.239l1.031,-1.409L647.842,653.996L647.842,653.996L647.842,653.996L647.842,653.996zM648.354,652.188l0.093,1.549l-0.809,-0.748l-0.057,-0.885L648.354,652.188L648.354,652.188L648.354,652.188L648.354,652.188zM640.817,648.718l0.074,1.834l1.209,-0.191l-0.729,2.519l1.609,0.771l-0.565,0.688l-0.594,-0.531l-0.068,0.652l0.84,0.442l-1.301,0.979l0.139,2.903l0.584,-2.135l0.99,-0.102l0.104,0.91l-0.858,5.198l-0.32,-0.274l-0.072,0.594l-1.014,-0.443l0.165,0.967l-1.098,0.424l0.194,0.751l0.367,-0.403l0.18,0.468l0.923,-0.954l-0.22,-0.708l0.917,0.546l-1.183,4.918l-0.34,-0.779l-1.344,-0.39l0.01,-1.315l-0.769,0.25l-0.252,-1.489l0.728,0.11l0.217,-0.543l-0.329,-0.382l-0.619,0.429l-0.521,-2.181l-0.688,0.613l-0.405,-3.678l-0.61,0.251l-0.248,-0.587l1.278,-2.574l0.638,1.541l0.389,-0.251l0.065,1.018l0.18,-0.342l0.329,-6.052L640.817,648.718L640.817,648.718L640.817,648.718L640.817,648.718zM650.431,649.353l0.69,1.8l-0.533,1.537l-0.979,-1.3L650.431,649.353L650.431,649.353L650.431,649.353L650.431,649.353zM649.364,650.772l0.463,2.918l-1.007,-0.796l0.008,-0.822l-1.352,-0.914l0.769,-0.155l0.526,0.706L649.364,650.772L649.364,650.772L649.364,650.772L649.364,650.772zM628.22,665.533l1.354,0.215l-0.023,1.609l-1.445,-0.182L628.22,665.533L628.22,665.533L628.22,665.533L628.22,665.533zM636.606,665.246l0.776,0.378l-1.026,0.907L636.606,665.246L636.606,665.246L636.606,665.246L636.606,665.246z"/>
 			</svg>
-			<table style="margin-top: -50px;">
+			<table class="legend-container">
 				<tr class="legend">
 					<td style="background-color: #fbf2c4; width: 14.28%;"></td>
 					<td style="background-color: #ffc15d; width: 14.28%;"></td>
@@ -178,11 +210,11 @@
 			</table>
 			<div class="table-container">
 				<div class="table-card">
-					<p class="mint">Top 5 States By Total</p>
+					<p class="seablue">Top 5 States By Total</p>
 					<table class="topTotal compact" cellspacing="0" cellpadding="0"><tfoot></tfoot></table>
 				</div>
 				<div class="table-card right-card">
-					<p class="mint">Top 5 States This Month</p>
+					<p class="seablue">Top 5 States This Month</p>
 					<table class="topMonthly compact" cellspacing="0" cellpadding="0"><tfoot></tfoot></table>
 				</div>
 			</div>
@@ -204,7 +236,7 @@
 				</div>
 			</div>
 			<hr class="hr">
-			<h4 class="warning">DT Metering</h4>
+			<h4 class="warning">Distribution Transformer Metering</h4>
 			<div class="table-container">
 				<div class="table-card">
 					<table id="dsTable" class="compact" cellspacing="0" cellpadding="0"><tfoot></tfoot></table>
@@ -225,10 +257,89 @@
 			</div>
 		</div>
 	</div>
+	<div class="flex-row">
+		<div class="flex-column">
+			<div class="tab">
+				<button class="tablinks" onclick="openDiv(event, 'consumer')" id="defaultOpen"><img src="assets/house.png">Smart Consumer Metering</button>
+				<button class="tablinks" onclick="openDiv(event, 'dt')"><img src="assets/disttx.png">Distribution Transformer Metering</button>
+				<button class="tablinks" onclick="openDiv(event, 'feeder')"><img src="assets/feeder.png">Feeder Metering</button>
+			</div>
+		</div>
+	</div>
+	<div class="flex-row">
+		<div class="flex-column">
+				<div class="tabcontent" id="consumer">
+					<h4 class="success text-center"><img src="assets/house.png">SMART CONSUMER METERING</h4>
+					<div class="text-center">
+						<button class="outline-excel ce"><img src="assets/excel.png">&nbsp;Export to Excel </button>
+						<button class="outline-pdf cp"><img src="assets/pdf.png">&nbsp;Export to PDF </button>
+					</div>
+					<table id="tableConsumer" class="hover" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Sl</th><th>Nodal Agency</th><th>State</th><th>DISCOM</th><th>Scheme</th><th>Total<br> Sanctioned</th><th>Awarded</th><th>Deployment<br> Commencement</th><th>AMISP / SI</th><th><span></span><br> Achievement</th><th>Cumulative<br> Achievement</th><th>Progress</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="footer2">
+								<th></th><th></th><th>Total:</th><th></th><th></th><th class="C1"></th><th class="C3"></th><th></th><th></th><th class="C5"></th><th class="C7"></th><th class="C8"></th>
+							</tr>
+							<tr class="footer1">
+								<th></th><th></th><th>Page Total:</th><th></th><th></th><th class="C0"></th><th class="C2"></th><th></th><th></th><th class="C4"></th><th class="C6"></th><th></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="tabcontent" id="dt">
+					<h4 class="warning text-center"><img src="assets/disttx.png">DISTRIBUTION TRANSFORMER METERING</h4>
+					<div class="text-center">
+						<button class="outline-excel de"><img src="assets/excel.png">&nbsp;Export to Excel </button>
+						<button class="outline-pdf dp"><img src="assets/pdf.png">&nbsp;Export to PDF </button>
+					</div>
+					<table id="tableDT" class="hover" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Sl</th><th>Nodal Agency</th><th>State</th><th>DISCOM</th><th>Scheme</th><th>Total<br> Sanctioned</th><th>Awarded</th><th>Deployment<br> Commencement</th><th>AMISP / SI</th><th><span></span><br> Achievement</th><th>Cumulative<br> Achievement</th><th>Progress</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="footer2">
+								<th></th><th></th><th>Total:</th><th></th><th></th><th class="D1"></th><th class="D3"></th><th></th><th></th><th class="D5"></th><th class="D7"></th><th class="D8"></th>
+							</tr>
+							<tr class="footer1">
+								<th></th><th></th><th>Page Total:</th><th></th><th></th><th class="D0"></th><th class="D2"></th><th></th><th></th><th class="D4"></th><th class="D6"></th><th></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="tabcontent" id="feeder">
+					<h4 class="danger text-center"><img src="assets/feeder.png">FEEDER METERING</h4>
+					<div class="text-center">
+						<button type="button" class="outline-excel fe"><img src="assets/excel.png">&nbsp;Export to Excel </button>
+						<button type="button" class="outline-pdf fp"><img src="assets/pdf.png">&nbsp;Export to PDF </button>
+					</div>
+					<table id="tableFeeder" class="hover" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Sl</th><th>Nodal Agency</th><th>State</th><th>DISCOM</th><th>Scheme</th><th>Total<br> Sanctioned</th><th>Awarded</th><th>Deployment<br> Commencement</th><th>AMISP / SI</th><th><span></span><br> Achievement</th><th>Cumulative<br> Achievement</th><th>Progress</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="footer2">
+								<th></th><th></th><th>Total:</th><th></th><th></th><th class="F1"></th><th class="F3"></th><th></th><th></th><th class="F5"></th><th class="F7"></th><th class="F8"></th>
+							</tr>
+							<tr class="footer1">
+								<th></th><th></th><th>Page Total:</th><th></th><th></th><th class="F0"></th><th class="F2"></th><th></th><th></th><th class="F4"></th><th class="F6"></th><th></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+		</div>
+	</div>
 	<div class="abbr">
 		<p>The above dashboard covers only IS-16444 standard certified Smart Meter deployment schemes/projects. However, 1,27,767 non IS-16444 certified but standard functionality compliant Smart Meters were deployed in some projects. For more details, <a  href="assets/Non-IS16444-Certified-but-standard-functionality-compliant-Smart-Meter-Projects-September-2023.xlsx">click here</a>.</p>
 		<p><b>Legends:</b> SG - Smart Grid | NSGM - National Smart Grid Mission | RDSS - Revamped Distribution Sector Scheme | IPDS - Integrated Power Development Scheme | SDP - Special Development Package | DDUGJY - Deen Dayal Upadhyay Gram Jyoti Yojana | PMDP - Prime Minister Development Package | JPSIP - Jharkhand Power System Improvement Project | ST&D -  Sub Transmission & Distribution</p>
-		<p class="lastUpdated">Data last updated on <strong><span></span></strong>.&emsp; Data sourced from National Smart Grid Mission.</p>
+		<p class="lastUpdated">Data last updated on <strong><span></span></strong>.&emsp;|&emsp;Data sourced from National Smart Grid Mission.&emsp;|&emsp;Verify data authenticity with NSGM.</p>
 		<p>Please reload the page in case of no data display</p>
 	</div>
 	<button id="backToTop" title="Go to top">↑</button>
@@ -236,9 +347,24 @@
 <script type="text/javascript" src="assets/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="assets/jquery.dataTables-1.13.4.min.js"></script>
 <script type="text/javascript" src="assets/circle-progress-1.2.2.min.js"></script>
+<script type="text/javascript" src="assets/dataTables.buttons-2.3.6.min.js"></script>
+<script type="text/javascript" src="assets/buttons.html5-2.3.6.min.js"></script>
+<script type="text/javascript" src="assets/jszip-3.1.3.min.js"></script>
+<script type="text/javascript" src="assets/pdfmake-0.1.53.min.js"></script>
+<script type="text/javascript" src="assets/vfs_fonts-0.1.53.js"></script>
 <script type="text/javascript">
+	function openDiv(evt, divid) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+		document.getElementById(divid).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+	document.getElementById("defaultOpen").click();
 	$(document).ready(function() {
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1dI5zeiW_W3w8O6nb13AjrCR51fpnrujmRJyjqY8zBX8/values/Pivots?alt=json&majorDimension=columns&key=AIzaSyBo_nzKxFwcamkPnMMkNPx8ZJrRj852U6Y', function(data) {
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1dI5zeiW_W3w8O6nb13AjrCR51fpnrujmRJyjqY8zBX8/values/Pivots?alt=json&majorDimension=columns&key=AIzaSyBo_nzKxFwcamkPnMMkNPx8ZJrRj852U6Y', function (data) {
 			var data = data.values;
 			function transpose(matrix) { let [row] = matrix; return row.map((value, column) => matrix.map(row => row[column])); }
 			function intVal(i) { return typeof i === 'string' ? i.replace(/,/g, '') * 1 : typeof i === 'number' ? i : 0; }
@@ -264,10 +390,10 @@
 			$('.Count').each(function() {
 				$(this).prop('Counter',0).animate({Counter:$(this).text()},{duration:2000,easing:'swing',step:(now)=>{$(this).text(Math.ceil(now).toLocaleString('en-IN'));}});
 			});
-			var countTotal = parseInt(counterData[1])+parseInt(counterData[3])+parseInt(counterData[5]);
-			$('.bar1').html("Consumer <br>"+counterData[1].toLocaleString('en-IN'));
-			$('.bar2').html("DT <br>"+counterData[3].toLocaleString('en-IN'));
-			$('.bar3').html("Feeder <br>"+counterData[5].toLocaleString('en-IN'));
+			var countTotal = parseInt(counterData[2])+parseInt(counterData[5])+parseInt(counterData[8]);
+			$('.bar1').html("Consumer <br>"+counterData[2].toLocaleString('en-IN'));
+			$('.bar2').html("DT <br>"+counterData[5].toLocaleString('en-IN'));
+			$('.bar3').html("Feeder <br>"+counterData[8].toLocaleString('en-IN'));
 			$('.bar4').html(" = Total Deployed <br>"+countTotal.toLocaleString('en-IN'));
 			yearlyData.push(data[37].slice(1,));
 			yearlyData.push(data[38].slice(1,).map((ele) => {return intVal(ele);}));
@@ -331,21 +457,76 @@
 			var topTable = [];
 			topTable.push(transpose([data[47].slice(1,),data[48].slice(1,)]));
 			topTable.push(transpose([data[53].slice(1,),data[54].slice(1,)]));
-			console.log(topTable);
 			['topTotal','topMonthly'].forEach((e,idx) => {
 				$('.'+e).dataTable({paging:false, ordering:false, info:false, searching:false, data:topTable[idx], columns:[{title:'State/UT'},{title:'Deployed', className:'dt-body-right'}]});
 			});
-			$('.lastUpdated span').html(data[28][1]);
-			$(document).ready(function() {
-				$(window).scroll(function() {
-					if($(window).scrollTop()>100) {$('#backToTop').fadeIn(300)} else {$('#backToTop').fadeOut(300)}
-				});
-				$(window).click(function() {window.scrollTo({ top: 0, behavior: 'smooth' });});
-				if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-				$(document).ready(function () { $(window).scrollTop(0); });
-				$(window).on('load', function () { $(window).scrollTop(0); });
-			});
+			$('.lastUpdated span').html(data[32][1]);
 		});
+		$('#tableConsumer thead tr th').addClass('bg-success');
+		$('#tableConsumer .footer1 th').addClass('bg-success-footer1');
+		$('#tableConsumer .footer2 th').addClass('bg-success-footer2');
+		$('#tableDT thead tr th').addClass('bg-warning');
+		$('#tableDT .footer1 th').addClass('bg-warning-footer1');
+		$('#tableDT .footer2 th').addClass('bg-warning-footer2');
+		$('#tableFeeder thead th').addClass('bg-danger');
+		$('#tableFeeder .footer1 th').addClass('bg-danger-footer1');
+		$('#tableFeeder .footer2 th').addClass('bg-danger-footer2');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1dI5zeiW_W3w8O6nb13AjrCR51fpnrujmRJyjqY8zBX8/values/ImportedNewFormat?alt=json&key=AIzaSyBo_nzKxFwcamkPnMMkNPx8ZJrRj852U6Y', function(data) {
+			var data = data.values, totalData = [];
+			$('thead span').html(data[1][1]);
+			var total = parseInt(data[1][3].replace(/,/g,''))+parseInt(data[1][5].replace(/,/g,''))+parseInt(data[1][7].replace(/,/g,''));
+			$('.bar1').html("Consumer <br>"+data[1][3]);
+			$('.bar2').html("DT <br>"+data[1][5]);
+			$('.bar3').html("Feeder <br>"+data[1][7]);
+			$('.bar4').html(" = Total Deployed <br>"+total.toLocaleString('en-IN'));
+			var labels = ['nodalagency','state','discom','scheme','sanctionedp1','sanctionedp2','totalsanctioned','awarded', 'commencement', 'monthachievement','totalachievement', 'amisp','progress','type'];
+			var columns = [{'data':'', render: function(data, type, row, meta) {return meta.row + 1},}, {'data':'nodalagency'}, {'data':'state'}, {'data':'discom'}, {'data':'scheme'}, {'data':'totalsanctioned',}, {'data':'awarded'}, {'data': 'commencement'}, {'data':'amisp'}, {'data':'monthachievement'}, {'data':'totalachievement'}, {'data':'progress', render: function(data) {return '<div class="pbar" title="'+parseInt(data)+'% deployed"><div role="progressbar" class="progress-bar-striped active" style="background-color: cornflowerblue; height: 0.75rem; border-radius: 100px; width: '+parseInt(data)+'%; max-width: 100%;"></div></div>'}},];
+			for (var i = 3; i < data.length; i++) {totalData.push(JSON.parse(JSON.stringify(Object.assign(...labels.map((e, idx) => ({[e]: data[i][idx]}))))));}
+			var consumerTable = totalData.filter(e => e.type == "Consumer");
+			var dtTable = totalData.filter(e => e.type == "DT");
+			var feederTable = totalData.filter(e => e.type == "Feeder");
+			amisp(consumerTable);
+			amisp(dtTable);
+			amisp(feederTable);
+			function amisp(table) {
+				table.forEach(e => {
+					var text = e['amisp'];
+					if (e['amisp'].includes("Multiple")) {
+						e['amisp'] = '<div class="tooltip">Multiple <span class="rarr">&mdash;</span> <span class="tooltiptext"><ol><li>'+e['amisp'].replace(/Multiple {/g,"").replace(/}/g,"").split(", ").join(", </li><li>")+'</li></ol></span></div>';
+					}
+				});
+			}
+			drawTable('tableConsumer', consumerTable, 'Smart Consumer Metering Status');
+			drawTable('tableDT', dtTable, 'DT Metering Status');
+			drawTable('tableFeeder', feederTable, 'Feeder Metering Status');
+			function drawTable(id, table, exportTitle) {
+				let title = exportTitle+' as on '+data[1][0];
+				let source = 'Data downloaded from '+window.location.href+'. \r\nData sourced from National Smart Grid Mission. Verify data authenticity with NSGM.';
+				let disclaimer = 'Data sourced from National Smart Grid Mission. Verify data authenticity with NSGM.';
+				$('#'+id).dataTable({data:table,'columns':columns,ordering:false,buttons:[{extend:'excel',title:title,messageTop:source,messageBottom:disclaimer,footer:true,exportOptions:{columns:[...Array(11).keys()]}},{extend:'pdf',orientation:'landscape',title:title,messageTop:source,messageBottom:disclaimer,footer:true,exportOptions:{columns:[...Array(11).keys()]}}],
+					footerCallback: function(row, data, start, end, display) {
+						var totals=[], api = this.api();
+						var intVal = k => { return typeof k === 'string' ? k.replace(/,/g, '') * 1 : typeof k === 'number' ? k : 0; };
+						[5, 6, 9, 10].forEach(e => {totals.push(api.column(e,{page:'current'}).data().reduce((a,b) => intVal(a)+intVal(b))); totals.push(api.column(e,{search:'applied'}).data().reduce((a,b) => intVal(a)+intVal(b)));});
+						[...Array(8).keys()].forEach(i => $('.'+id[5]+i).html(totals[i].toLocaleString('en-IN')));
+						$('.'+id[5]+'8').html('<div class="pbar" title="'+Math.round(100*totals[7]/totals[1])+'% deployed"><div role="progressbar" class="progress-bar-striped active" style="background-color: cornflowerblue; height: 0.75rem; border-radius: 100px; width: '+Math.round(100*totals[7]/totals[1])+'%; max-width: 100%;"></div></div>');
+					},
+				});
+			}
+			$('.ce').on('click', function() { $('#tableConsumer').DataTable().buttons(0).trigger(); });
+			$('.cp').on('click', function() { $('#tableConsumer').DataTable().buttons(1).trigger(); });
+			$('.de').on('click', function() { $('#tableDT').DataTable().buttons(0).trigger(); });
+			$('.dp').on('click', function() { $('#tableDT').DataTable().buttons(1).trigger(); });
+			$('.fe').on('click', function() { $('#tableFeeder').DataTable().buttons(0).trigger(); });
+			$('.fp').on('click', function() { $('#tableFeeder').DataTable().buttons(1).trigger(); });
+		});
+		$(document).ready(function() {
+			$(window).scroll(function() { if($(window).scrollTop()>100) {$('#backToTop').fadeIn(300)} else {$('#backToTop').fadeOut(300)} });
+			$('#backToTop').click(function() {window.scrollTo({ top: 0, behavior: 'smooth' });});
+		});
+		if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+		$(document).ready(function () { $(window).scrollTop(0); });
+		$(window).on('load', function () { $(window).scrollTop(0); });
 	});
 </script>
 </html>
