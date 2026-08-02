@@ -71,6 +71,7 @@ img { max-width: 2rem; margin-right: 5px; }
 .outline-excel { background: #16a34a; }
 .outline-pdf { background: #dc2626; }
 .dataTables_length, .dataTables_filter { margin: 5px!important; }
+.dataTables_wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 #tableConsumer thead th, #tableConsumer tbody td, #tableConsumer tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableDT thead th, #tableDT tbody td, #tableDT tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableFeeder thead th, #tableFeeder tbody td, #tableFeeder tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
@@ -82,4 +83,4 @@ ol { padding-inline-start: 10px; margin-block-start: 0px; margin-block-end: 0px;
 .footer1 { position: relative; top: -28px; }
 .footer2 { position: relative; top: 26px; }
 #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 99; display: none; width: 50px; height: 50px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 25px; font-weight: bolder; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; }
-#backToTop:hover { background: #007bff; transform: translateY(-5px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);}
+#backToTop:hover { background: #007bff; transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);}

@@ -147,8 +147,7 @@ $(document).ready(function() {
 		function drawTable(id, table, exportTitle) {
 			let title = exportTitle+' as on '+data[1][0];
 			let source = 'Data downloaded from '+window.location.href+'. \r\nData sourced from National Smart Grid Mission. Verify data authenticity with NSGM.';
-			let disclaimer = 'Data sourced from National Smart Grid Mission. Verify data authenticity with NSGM.';
-			$('#'+id).dataTable({data:table,'columns':columns,ordering:false,buttons:[{extend:'excel',title:title,messageTop:source,messageBottom:disclaimer,footer:true,exportOptions:{columns:[...Array(11).keys()]}},{extend:'pdf',orientation:'landscape',title:title,messageTop:source,messageBottom:disclaimer,footer:true,exportOptions:{columns:[...Array(11).keys()]}}],
+			$('#'+id).dataTable({data:table,'columns':columns,ordering:false,buttons:[{extend:'excel',title:title,messageTop:source,footer:true,exportOptions:{columns:[...Array(11).keys()]}},{extend:'pdf',orientation:'landscape',title:title,messageTop:source,footer:true,exportOptions:{columns:[...Array(11).keys()]}}],
 				footerCallback: function(row, data, start, end, display) {
 					var totals=[], api = this.api();
 					var intVal = k => { return typeof k === 'string' ? k.replace(/,/g, '') * 1 : typeof k === 'number' ? k : 0; };
