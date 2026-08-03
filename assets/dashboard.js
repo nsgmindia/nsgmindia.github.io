@@ -1,3 +1,14 @@
+$("#share").click(function(){ $("#page-url").val(window.location.href); $("#popup").show(); });
+$(document).keydown(function(e) { if (e.key === "Escape") { $("#popup").hide(); } });
+$("#popup").click(function(e) { if (e.target === this) { $(this).hide(); } });
+$("#copy").click(function(){
+	var urlText = $("#page-url").val();
+	navigator.clipboard.writeText(urlText).then(function() {
+		$("#copy img").attr('src', 'assets/tick.png');
+		setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);
+	});
+});
+$("#print").click(function() { window.print(); });
 function openDiv(evt, divid) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -24,13 +35,13 @@ $(document).ready(function() {
 		[1,2,3].forEach(k => { counterData.push(intVal(data[33][k])); counterData.push(intVal(data[34][k])); counterData.push(intVal(data[35][k])); });
 		['c','d','f'].forEach((e,idx) => {
 			$('#'+e+'Sanc').html(counterData[idx*3]);
-			$('.'+e+'Sanc').circleProgress({ value: 1, size: 120, thickness: 6, fill: {color: '#2563eb'}, startAngle: -1.63 });
+			$('.'+e+'Sanc').circleProgress({ value: 1, size: 100, thickness: 4, fill: {color: '#2563eb'}, startAngle: -1.63 });
 			$('#'+e+'Award').html(counterData[idx*3+1]);
-			$('.'+e+'Award').circleProgress({ value: counterData[idx*3+1]/counterData[idx*3], size: 100, thickness: 6, fill: {color: '#9333ea'}, startAngle: -1.63 });
+			$('.'+e+'Award').circleProgress({ value: counterData[idx*3+1]/counterData[idx*3], size: 80, thickness: 4, fill: {color: '#9333ea'}, startAngle: -1.63 });
 			$('#'+e+'Inst').html(counterData[idx*3+2]);
-			$('.'+e+'Inst').circleProgress({ value: counterData[idx*3+2]/counterData[idx*3], size: 80, thickness: 6, fill: {color: '#16a34a'}, startAngle: -1.63 });
-			$('#'+e+'Bal').html(counterData[idx*3]-counterData[idx*3+2]);
-			$('.'+e+'Bal').circleProgress({ value: 1-counterData[idx*3+2]/counterData[idx*3], size: 60, thickness: 6, fill: {color: '#f97316'}, startAngle: -1.63 });
+			$('.'+e+'Inst').circleProgress({ value: counterData[idx*3+2]/counterData[idx*3], size: 60, thickness: 4, fill: {color: '#16a34a'}, startAngle: -1.63 });
+			// $('#'+e+'Bal').html(counterData[idx*3]-counterData[idx*3+2]);
+			// $('.'+e+'Bal').circleProgress({ value: 1-counterData[idx*3+2]/counterData[idx*3], size: 40, thickness: 4, fill: {color: '#f97316'}, startAngle: -1.63 });
 		});
 		$('.Count').each(function() {
 			$(this).prop('Counter',0).animate({Counter:$(this).text()},{duration:2000,easing:'swing',step:(now)=>{$(this).text(Math.ceil(now).toLocaleString('en-IN'));}});
@@ -119,11 +130,6 @@ $(document).ready(function() {
 	$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1dI5zeiW_W3w8O6nb13AjrCR51fpnrujmRJyjqY8zBX8/values/ImportedNewFormat?alt=json&key=AIzaSyBo_nzKxFwcamkPnMMkNPx8ZJrRj852U6Y', function(data) {
 		var data = data.values, totalData = [];
 		$('thead span').html(data[1][1]);
-		var total = parseInt(data[1][3].replace(/,/g,''))+parseInt(data[1][5].replace(/,/g,''))+parseInt(data[1][7].replace(/,/g,''));
-		$('.bar1').html("Consumer <br>"+data[1][3]);
-		$('.bar2').html("DT <br>"+data[1][5]);
-		$('.bar3').html("Feeder <br>"+data[1][7]);
-		$('.bar4').html(" = Total Deployed <br>"+total.toLocaleString('en-IN'));
 		var labels = ['nodalagency','state','discom','scheme','sanctionedp1','sanctionedp2','totalsanctioned','awarded', 'commencement', 'monthachievement','totalachievement', 'amisp','progress','type'];
 		var columns = [{'data':'', render: function(data, type, row, meta) {return meta.row + 1},}, {'data':'nodalagency'}, {'data':'state'}, {'data':'discom'}, {'data':'scheme'}, {'data':'totalsanctioned',}, {'data':'awarded'}, {'data': 'commencement'}, {'data':'amisp'}, {'data':'monthachievement'}, {'data':'totalachievement'}, {'data':'progress', render: function(data) {return '<div class="pbar" title="'+parseInt(data)+'% deployed"><div role="progressbar" class="progress-bar-striped active" style="background-color: cornflowerblue; height: 0.75rem; border-radius: 100px; width: '+parseInt(data)+'%; max-width: 100%;"></div></div>'}},];
 		for (var i = 3; i < data.length; i++) {totalData.push(JSON.parse(JSON.stringify(Object.assign(...labels.map((e, idx) => ({[e]: data[i][idx]}))))));}

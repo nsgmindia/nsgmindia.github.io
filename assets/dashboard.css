@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(135deg, #eef4ff, #f8fbff); margin: auto; max-width: 1600px; padding: 20px; color: #1f2937; }
 .header { background: linear-gradient(135deg, #6d28d9, #10b981); width: 100%; color:#fff; text-align: center; font-size: 28px; font-weight:bolder; border-radius:18px; padding:10px; box-shadow:0 8px 24px rgba(37,99,235,0.25); border:1px solid rgba(255,255,255,0.15); }
+#share { position: fixed; right: 30px; z-index: 10; top: 35px; cursor: pointer; }
+#share .icon { margin: 0; width: 25px; }
+#popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 199; }
+.box { background: white; width: 350px; margin: 15% auto; padding: 10px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; }
+.url-container { display: flex; margin: 10px 0; width: 330px; align-items: center; }
+.url-container input { flex: 1; padding: 5px; border: 1px solid #ccc; border-right: none; }
+.url-container button { padding: 3px; border: 1px solid #ccc; background: #f4f4f4; cursor: pointer; }
+#print { cursor: pointer; }
+@media print { #popup, #share, #backToTop { display: none !important; } }
 .progress { width: 100%; height: 40px; margin: auto; overflow: hidden; border-radius: 10px; }
 .progress-bar { float: left; height: 100%; line-height: 18px; padding: 2px; text-align: center; background-color: #d3d3d3; box-sizing: border-box; font-weight: bold; }
 .progress-bar-striped { background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent); background-size: 1rem 1rem; }
@@ -19,10 +28,10 @@ body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(1
 .danger { background: linear-gradient(135deg, #de4b4b, #f57676); }
 .blues { background: linear-gradient(135deg, #3f4ef2, #5462f7); }
 .seablue { background: linear-gradient(135deg, #2b5876, #4e4376); font-size: 14px; font-weight: bold; }
-.sub-columns { display: flex; justify-content: space-between; align-items: center; margin: auto 20px; }
+.sub-columns { display: flex; justify-content: space-between; margin: auto 30px; align-items: center; }
 h4 { margin: 5px 0; font-size: 18px; }
 .Count { font-weight: 700; font-size: 20px; }
-.icon { width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; }
+.icon { max-width: 20px; max-height: 20px; vertical-align: middle; margin-right: 5px; }
 .sancColor { color: #2563eb; }
 .awardColor { color: #9333ea; }
 .instColor { color: #16a34a; }
@@ -31,11 +40,12 @@ h4 { margin: 5px 0; font-size: 18px; }
 .container > div { grid-area: 1/1; display: flex; justify-content: center; align-items: center; border-radius: 50%; opacity: 0.85; }
 .circle1, .circle2, .circle3, .circle4 { transition: box-shadow 0.3s ease-in-out; }
 .circle1:hover, .circle2:hover, .circle3:hover, .circle4:hover { box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3); }
-.circle1 { width: 120px; height: 120px; }
-.circle2 { width: 100px; height: 100px; }
-.circle3 { width: 80px; height: 80px; }
-.circle4 { width: 60px; height: 60px; }
+.circle1 { width: 100px; height: 100px; }
+.circle2 { width: 80px; height: 80px; }
+.circle3 { width: 60px; height: 60px; }
+.circle4 { width: 40px; height: 40px; }
 #graph1, #graph2, #graph3 { max-height: 230px; max-width: 460px; margin: 15px 20px; }
+hr { margin: 10px 0; }
 .mapSource { display: inline-flex; align-items: center; gap: 8px; position: relative; left: 250px; top: 10px; margin: 10px; font-size: 12px; }
 #mapIndia { width: 100%; height: auto;filter: drop-shadow(0 0 1px maroon); }
 .legend-container { margin: -40px 20px 20px 20px; }
@@ -46,7 +56,7 @@ path:hover { fill: #2563eb !important; cursor: pointer; filter: drop-shadow(0 0 
 .abbr { text-align: center; font-size: 11px; }
 table { font-size: 11px; }
 td, th { padding: 2px !important; }
-.table-container { display: flex; gap: 5px; width: 100%; }
+.table-container { display: flex; gap: 5px; width: 100%; margin: 10px auto; }
 .table-card { flex: 1; min-width: 0; margin: 1px; }
 .right-card { border-left: 1px solid gray; padding-left: 5px; }
 .topTotal, .topMonthly { font-size: 14px; max-width: 200px; }
@@ -55,7 +65,6 @@ td, th { padding: 2px !important; }
 .tablinks:hover { transform: translateY(-4px); }
 .tablinks.active { background: linear-gradient(135deg, #2b5876, #4e4376, #2b5876); color: #fff; }
 .tabcontent { background: #fff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-img { max-width: 2rem; margin-right: 5px; }
 .text-center { display: flex; align-items: center; justify-content: center; }
 .bg-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; }
 .bg-warning { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; }
@@ -71,7 +80,8 @@ img { max-width: 2rem; margin-right: 5px; }
 .outline-excel { background: #16a34a; }
 .outline-pdf { background: #dc2626; }
 .dataTables_length, .dataTables_filter { margin: 5px!important; }
-.dataTables_wrapper { overflow-x: auto; text-wrap:nowrap; -webkit-overflow-scrolling: touch; }
+.dataTables_wrapper { text-wrap: nowrap; }
+#tableConsumer_wrapper, #tableDT_wrapper, #tableFeeder_wrapper { overflow-x: auto; text-wrap: nowrap; -webkit-overflow-scrolling: touch; }
 #tableConsumer thead th, #tableConsumer tbody td, #tableConsumer tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableDT thead th, #tableDT tbody td, #tableDT tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableFeeder thead th, #tableFeeder tbody td, #tableFeeder tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
