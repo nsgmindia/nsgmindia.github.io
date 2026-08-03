@@ -103,7 +103,7 @@ $(document).ready(function() {
 		topTable.push(transpose([data[47].slice(1,),data[48].slice(1,)]));
 		topTable.push(transpose([data[53].slice(1,),data[54].slice(1,)]));
 		['topTotal','topMonthly'].forEach((e,idx) => {
-			$('.'+e).dataTable({paging:false, ordering:false, info:false, searching:false, data:topTable[idx], columns:[{title:'State/UT'},{title:'Deployed', className:'dt-body-right'}]});
+			$('.'+e).dataTable({paging:false, ordering:false, info:false, searching:false, data:topTable[idx], columns:[{title:'State/UT'},{title:'Deployed'}]});
 		});
 		$('.lastUpdated span').html(data[32][1]);
 	});

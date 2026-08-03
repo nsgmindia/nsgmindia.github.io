@@ -45,11 +45,11 @@ path:hover { fill: #2563eb !important; cursor: pointer; filter: drop-shadow(0 0 
 .infoBox { position: absolute; pointer-events:none; max-width: 400px; background: #fff; font-size: 12px; padding: 10px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); display: none; z-index: 99; }
 .abbr { text-align: center; font-size: 11px; }
 table { font-size: 11px; }
-td { padding: 1px !important; }
+td, th { padding: 2px !important; }
 .table-container { display: flex; gap: 5px; width: 100%; }
 .table-card { flex: 1; min-width: 0; margin: 1px; }
 .right-card { border-left: 1px solid gray; padding-left: 5px; }
-.topTotal, .topMonthly { font-size: 14px; max-width: 180px; }
+.topTotal, .topMonthly { font-size: 14px; max-width: 200px; }
 .tab {display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin: 2px 0; }
 .tablinks { display: flex; align-items: center; gap: 5px; min-width: 350px; justify-content: center; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: bold; background: #fff; border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; transition: 0.3s; }
 .tablinks:hover { transform: translateY(-4px); }
@@ -71,7 +71,7 @@ img { max-width: 2rem; margin-right: 5px; }
 .outline-excel { background: #16a34a; }
 .outline-pdf { background: #dc2626; }
 .dataTables_length, .dataTables_filter { margin: 5px!important; }
-.dataTables_wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.dataTables_wrapper { overflow-x: auto; text-wrap:nowrap; -webkit-overflow-scrolling: touch; }
 #tableConsumer thead th, #tableConsumer tbody td, #tableConsumer tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableDT thead th, #tableDT tbody td, #tableDT tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableFeeder thead th, #tableFeeder tbody td, #tableFeeder tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
