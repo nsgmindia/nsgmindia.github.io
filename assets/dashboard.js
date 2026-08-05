@@ -11,8 +11,8 @@ $("#print").click(function(){
 	options = {
 		margin: 5, filename: 'Smart Metering Statistics.pdf',
 		image: { type: 'jpeg', quality: 0.98 },
-		html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: 1600, windowWidth: 1600, onclone: function(clonedDoc) { const clonedEle = $("#dashboard")[0]; clonedEle.style.width = '1600px', clonedEle.style.maxWidth = 'none', clonedEle.style.display = 'flex', clonedEle.style.flexWrap = 'nowrap' } },
-		jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
+		html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: 1600, windowWidth: 1600 },
+		jsPDF: { unit: 'pt', format: 'a4', orientation: 'landscape' }
 	};
 	html2pdf().set(options).from(ele).save();
 });
