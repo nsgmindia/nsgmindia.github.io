@@ -81,7 +81,7 @@ td, th { padding: 2px !important; }
 .outline-pdf { background: #dc2626; }
 .dataTables_length, .dataTables_filter { margin: 5px!important; }
 .dataTables_wrapper { text-wrap: nowrap; }
-#tableConsumer_wrapper, #tableDT_wrapper, #tableFeeder_wrapper { overflow-x: auto; text-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+/* #tableConsumer_wrapper, #tableDT_wrapper, #tableFeeder_wrapper { overflow-x: auto; text-wrap: nowrap; -webkit-overflow-scrolling: touch; } */
 #tableConsumer thead th, #tableConsumer tbody td, #tableConsumer tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableDT thead th, #tableDT tbody td, #tableDT tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
 #tableFeeder thead th, #tableFeeder tbody td, #tableFeeder tfoot th { font-size: 14px; text-align: center!important; vertical-align: middle!important; white-space: nowrap!important; padding: 5px !important; }
