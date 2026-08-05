@@ -46,7 +46,7 @@ h4 { margin: 5px 0; font-size: 18px; }
 .circle4 { width: 40px; height: 40px; }
 #graph1, #graph2, #graph3 { max-height: 230px; max-width: 460px; margin: 15px 20px; }
 hr { margin: 10px 0; }
-.mapSource { display: inline-flex; align-items: center; gap: 8px; position: relative; left: 250px; top: 10px; margin: 10px; font-size: 12px; }
+.mapSource { display: inline-flex; align-items: center; gap: 8px; position: relative; left: 200px; top: 10px; margin: 10px; font-size: 12px; }
 #mapIndia { width: 100%; height: auto;filter: drop-shadow(0 0 1px maroon); }
 .legend-container { margin: -40px 20px 20px 20px; }
 #legend { max-width: 350px; margin: 30px 0; }
