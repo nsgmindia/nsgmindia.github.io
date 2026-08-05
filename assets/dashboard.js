@@ -9,12 +9,13 @@ $("#copy").click(function(){
 $('#print').on('click', function() {
 	const { jsPDF } = window.jspdf;
 	html2canvas($('#dashboard')[0], {scale: 3, useCORS: true}).then(function(canvas) {
-		const imgData = canvas.toDataURL("image/jpeg",0.8);
+		const imgData = canvas.toDataURL("image/jpeg",0.98);
 		const pdf = new jsPDF('p','pt','a4');
-		const pdfWidth = pdf.internal.pageSize.getWidth();
+		const margin = 10;
+		const pdfWidth = pdf.internal.pageSize.getWidth() - (margin*2);
 		const ratio = canvas.width/pdfWidth;
 		const finalImgHeight = canvas.height/ratio;
-		pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, finalImgHeight);
+		pdf.addImage(imgData, 'JPEG', margin, margin, pdfWidth, finalImgHeight);
 		pdf.save('Smart Metering Statistics.pdf');
 	});
 });
