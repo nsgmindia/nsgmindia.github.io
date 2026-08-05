@@ -17,9 +17,10 @@ $("#copy").click(function(){
 // 	html2pdf().set(options).from(ele).save();
 // });
 $('#print').on('click', function() {
+	const { jsPDF } = window.jspdf;
 	html2canvas($('#dashboard')[0], {scale: 2, useCORS: true, backgroundColor: null}).then(function(canvas) {
 		const imageData = canvas.toDataURL("image/png");
-		const pdf = new window.jspdf('p','pt','a4');
+		const pdf = new jsPDF('p','pt','a4');
 		const pdfWidth = pdf.internal.pageSize.getWidth();
 		const ratio = canvas.width/pdfWidth;
 		const finalImgHeight = canvas.height/ratio;
