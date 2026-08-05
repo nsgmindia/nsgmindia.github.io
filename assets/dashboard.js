@@ -5,8 +5,7 @@ $("#copy").click(function(){
 	var urlText = $("#page-url").val();
 	navigator.clipboard.writeText(urlText).then(function() { $("#copy img").attr('src', 'assets/tick.png'); setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);	});
 });
-// $("#print").click(function() { window.print(); });
-$('#print').on('click', function() {
+$('#download').on('click', function() {
 	const { jsPDF } = window.jspdf;
 	html2canvas($('#dashboard')[0], {scale: 3, useCORS: true}).then(function(canvas) {
 		const imgData = canvas.toDataURL("image/jpeg",0.9);
@@ -19,6 +18,7 @@ $('#print').on('click', function() {
 		pdf.save('Smart Metering Statistics.pdf');
 	});
 });
+$("#print").click(function() { window.print(); });
 function openDiv(evt, divid) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
