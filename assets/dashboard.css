@@ -8,7 +8,7 @@ body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(1
 .url-container { display: flex; margin: 10px 0; width: 330px; align-items: center; }
 .url-container input { flex: 1; padding: 5px; border: 1px solid #ccc; border-right: none; }
 .url-container button { padding: 3px; border: 1px solid #ccc; background: #f4f4f4; cursor: pointer; }
-#print { cursor: pointer; }
+#download, #print { cursor: pointer; }
 @media print { #popup, #share, #backToTop { display: none !important; } }
 .progress { width: 100%; height: 40px; margin: auto; overflow: hidden; border-radius: 10px; }
 .progress-bar { float: left; height: 100%; line-height: 18px; padding: 2px; text-align: center; background-color: #d3d3d3; box-sizing: border-box; font-weight: bold; }
