@@ -9,7 +9,7 @@ $("#copy").click(function(){
 $("#print").click(function(){
 	ele = $("#dashboard")[0];
 	const fullWidth = ele.scrollWidth;
-	options = { margin: 5, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: fullWidth, windowWidth: fullWidth }, jsPDF: { unit: 'mm', format: 'A3', orientation: 'portrait' } };
+	options = { margin: 5, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: fullWidth, windowWidth: 1600 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
 	html2pdf().set(options).from(ele).save();
 });
 function openDiv(evt, divid) {
