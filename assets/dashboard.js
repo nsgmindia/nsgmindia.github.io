@@ -7,7 +7,7 @@ $("#copy").click(function(){
 });
 // $("#print").click(function() { window.print(); });
 $("#print").click(function(){
-	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, width: 1600, windowWidth: 1600 }, jsPDF: { unit: 'px', format: 'A4', orientation: 'portrait' } };
+	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, width: 1600, windowWidth: 1600 }, jsPDF: { unit: 'mm', format: 'A4', orientation: 'portrait' } };
 	html2pdf().set(options).from($("#dashboard")[0]).save();
 });
 function openDiv(evt, divid) {
