@@ -5,11 +5,11 @@ $("#copy").click(function(){
 	var urlText = $("#page-url").val();
 	navigator.clipboard.writeText(urlText).then(function() { $("#copy img").attr('src', 'assets/tick.png'); setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);	});
 });
-$("#print").click(function() { window.print(); });
-// $("#print").click(function(){
-// 	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, width: 1600, windowWidth: 1600 }, pagebreak: { mode: ['avoid-all', 'css']}, jsPDF: { unit: 'pt', format: 'A4', orientation: 'portrait' } };
-// 	html2pdf().set(options).from($("#dashboard")[0]).save();
-// });
+// $("#print").click(function() { window.print(); });
+$("#print").click(function(){
+	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, width: 1600, windowWidth: 1600 }, pagebreak: { mode: ['avoid-all', 'css']}, jsPDF: { unit: 'pt', format: 'A4', orientation: 'portrait' } };
+	html2pdf().set(options).from($("#dashboard")[0]).save();
+});
 function openDiv(evt, divid) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
