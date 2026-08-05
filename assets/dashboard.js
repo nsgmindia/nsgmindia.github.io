@@ -3,12 +3,13 @@ $(document).keydown(function(e) { if (e.key === "Escape") { $("#popup").hide(); 
 $("#popup").click(function(e) { if (e.target === this) { $(this).hide(); } });
 $("#copy").click(function(){
 	var urlText = $("#page-url").val();
-	navigator.clipboard.writeText(urlText).then(function() {
-		$("#copy img").attr('src', 'assets/tick.png');
-		setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);
-	});
+	navigator.clipboard.writeText(urlText).then(function() { $("#copy img").attr('src', 'assets/tick.png'); setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);	});
 });
-$("#print").click(function() { window.print(); });
+// $("#print").click(function() { window.print(); });
+#("#print").click(function(){
+	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 }, jsPDF: { unit: 'mm', format: 'A4', orientation: 'portrait' } };
+	html2pdf().set(options).from($("#dashboard").save();
+});
 function openDiv(evt, divid) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
