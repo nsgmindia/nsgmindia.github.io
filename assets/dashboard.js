@@ -73,6 +73,7 @@ $(document).ready(function() {
 				$('#'+e+' tfoot').html('<tr><th>Grand Total</th><th>'+sanctioned.toLocaleString('en-IN')+'</th><th>'+installed.toLocaleString('en-IN')+'</th></tr>');
 			}});
 		});
+		Chart.defaults.font.family = "'Montserrat', Arial, sans-serif";
 		function createChart(id,yData,chartTitle) {
 			return new Chart($(id), {
 				type: "bar", responsive: true, maintainAspectRatio: false,
