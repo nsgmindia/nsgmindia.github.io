@@ -6,19 +6,9 @@ $("#copy").click(function(){
 	navigator.clipboard.writeText(urlText).then(function() { $("#copy img").attr('src', 'assets/tick.png'); setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);	});
 });
 // $("#print").click(function() { window.print(); });
-// $("#print").click(function(){
-// 	ele = $("#dashboard")[0];
-// 	options = {
-// 		margin: 5, filename: 'Smart Metering Statistics.pdf',
-// 		image: { type: 'jpeg', quality: 0.98 },
-// 		html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: 1600, windowWidth: 1600 },
-// 		jsPDF: { unit: 'pt', format: 'a4', orientation: 'landscape' }
-// 	};
-// 	html2pdf().set(options).from(ele).save();
-// });
 $('#print').on('click', function() {
 	const { jsPDF } = window.jspdf;
-	html2canvas($('#dashboard')[0], {scale: 2, useCORS: true}).then(function(canvas) {
+	html2canvas($('#dashboard')[0], {scale: 3, useCORS: true}).then(function(canvas) {
 		const imgData = canvas.toDataURL("image/jpeg",0.8);
 		const pdf = new jsPDF('p','pt','a4');
 		const pdfWidth = pdf.internal.pageSize.getWidth();
