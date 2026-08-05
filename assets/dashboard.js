@@ -18,13 +18,13 @@ $("#copy").click(function(){
 // });
 $('#print').on('click', function() {
 	const { jsPDF } = window.jspdf;
-	html2canvas($('#dashboard')[0], {scale: 1, useCORS: true, backgroundColor: null}).then(function(canvas) {
+	html2canvas($('#dashboard')[0], {scale: 2, useCORS: true}).then(function(canvas) {
 		const imgData = canvas.toDataURL("image/jpeg",0.8);
 		const pdf = new jsPDF('p','pt','a4');
 		const pdfWidth = pdf.internal.pageSize.getWidth();
 		const ratio = canvas.width/pdfWidth;
 		const finalImgHeight = canvas.height/ratio;
-		pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, finalImgHeight, undefined, 'FAST');
+		pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, finalImgHeight);
 		pdf.save('Smart Metering Statistics.pdf');
 	});
 });
