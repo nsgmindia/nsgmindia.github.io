@@ -1,3 +1,4 @@
+$("#url").html(window.location.href);
 $("#share").click(function(){ $("#page-url").val(window.location.href); $("#popup").show(); });
 $(document).keydown(function(e) { if (e.key === "Escape") { $("#popup").hide(); } });
 $("#popup").click(function(e) { if (e.target === this) { $(this).hide(); } });
