@@ -19,7 +19,7 @@ $("#copy").click(function(){
 $('#print').on('click', function() {
 	const { jsPDF } = window.jspdf;
 	html2canvas($('#dashboard')[0], {scale: 2, useCORS: true, backgroundColor: null}).then(function(canvas) {
-		const imageData = canvas.toDataURL("image/png");
+		const imgData = canvas.toDataURL("image/png");
 		const pdf = new jsPDF('p','pt','a4');
 		const pdfWidth = pdf.internal.pageSize.getWidth();
 		const ratio = canvas.width/pdfWidth;
