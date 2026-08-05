@@ -6,15 +6,25 @@ $("#copy").click(function(){
 	navigator.clipboard.writeText(urlText).then(function() { $("#copy img").attr('src', 'assets/tick.png'); setTimeout(function(){ $("#copy img").attr('src', 'assets/copy.png'); }, 2000);	});
 });
 // $("#print").click(function() { window.print(); });
-$("#print").click(function(){
-	ele = $("#dashboard")[0];
-	options = {
-		margin: 5, filename: 'Smart Metering Statistics.pdf',
-		image: { type: 'jpeg', quality: 0.98 },
-		html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: 1600, windowWidth: 1600 },
-		jsPDF: { unit: 'pt', format: 'a4', orientation: 'landscape' }
-	};
-	html2pdf().set(options).from(ele).save();
+// $("#print").click(function(){
+// 	ele = $("#dashboard")[0];
+// 	options = {
+// 		margin: 5, filename: 'Smart Metering Statistics.pdf',
+// 		image: { type: 'jpeg', quality: 0.98 },
+// 		html2canvas: { scale: 2, useCORS: true, scrollY: 0, width: 1600, windowWidth: 1600 },
+// 		jsPDF: { unit: 'pt', format: 'a4', orientation: 'landscape' }
+// 	};
+// 	html2pdf().set(options).from(ele).save();
+// });
+$('#print').on('click', function() {
+	const ele = $('#dashboard')[0];
+	html2canvas(ele, {scale: 2, backgroundColor: null}).then(function(canvas) {
+		const imageURL = canvas.toDataURL("image/png");
+		const $downloadLink = $('<a></a>', {href: imageURL,download: 'jquery-screenshot.png'});
+		$downloadLink.css('display', 'none').appendTo('body');
+		$downloadLink[0].click();
+		$downloadLink.remove();
+	});
 });
 function openDiv(evt, divid) {
 	var i, tabcontent, tablinks;
