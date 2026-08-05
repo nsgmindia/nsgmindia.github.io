@@ -22,7 +22,7 @@ body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(1
 .flex-row { display: flex; flex-direction: row; width: 100%; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
 .flex-column { flex: 1; min-width: 350px; background: #fff; border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; transition: 0.3s; }
 .flex-column:hover { transform: translateY(-4px); }
-.success, .warning, .danger, .blues, .seablue { margin: 10px; text-align: center; color: #fff; padding: 10px; border-radius: 10px; }
+.success, .warning, .danger, .blues, .seablue { margin: 5px; text-align: center; color: #fff; padding: 10px; border-radius: 10px; }
 .success { background: linear-gradient(135deg, #16a34a, #22c55e); }
 .warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
 .danger { background: linear-gradient(135deg, #de4b4b, #f57676); }
