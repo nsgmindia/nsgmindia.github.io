@@ -9,8 +9,8 @@ $("#copy").click(function(){
 $("#print").click(function(){
 	ele = $("#dashboard")[0];
 	const originalWidth = ele.style.width;
-	ele.style.width = 1600px;
-	options = { margin: 0, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, windowWidth: 1650 }, jsPDF: { unit: 'mm', format: 'A3', orientation: 'portrait' } };
+	ele.style.width = '1600px';
+	options = { margin: 5, filename: 'Smart Metering Statistics.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, windowWidth: 1600 }, jsPDF: { unit: 'mm', format: 'A3', orientation: 'portrait' } };
 	html2pdf().set(options).from(ele).save().then(function() { ele.style.width = originalWidth; });
 });
 function openDiv(evt, divid) {
