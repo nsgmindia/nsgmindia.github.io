@@ -8,7 +8,9 @@ $("#copy").click(function(){
 });
 $('#download').on('click', function() {
 	const { jsPDF } = window.jspdf;
+	$(".footer").show();
 	html2canvas($('#dashboard')[0], {scale: 2, useCORS: true}).then(function(canvas) {
+		$(".footer").hide();
 		const imgData = canvas.toDataURL("image/jpeg",0.9);
 		const pdf = new jsPDF('p','pt','a4');
 		const margin = 10;
