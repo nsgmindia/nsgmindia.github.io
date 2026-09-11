@@ -186,7 +186,7 @@ $(document).ready(function() {
 	});
 	$.getJSON("https://api.counterapi.dev/v2/nsgmindia/nsgmindia/up")
 		.done(function(response) {
-			const apiCount = Number(response?.count) || 0;
+			const apiCount = Number(response?.up_count) || 0;
 			const hits = 1100 + apiCount;
 			$('#views').text(hits);})
 		.fail(function() {$('#views').text('...');});
