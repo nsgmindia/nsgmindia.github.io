@@ -184,6 +184,7 @@ $(document).ready(function() {
 		$('.fe').on('click', function() { $('#tableFeeder').DataTable().buttons(0).trigger(); });
 		$('.fp').on('click', function() { $('#tableFeeder').DataTable().buttons(1).trigger(); });
 	});
+	$.getJSON("https://api.counterapi.dev/v2/nsgmindia/nsgmindia/up").done(function(response) {const hits=1100+response.count; $('#views').text(hits);}).fail(function() {$('#views').text('...');});
 	$(document).ready(function() {
 		$(window).scroll(function() { if($(window).scrollTop()>100) {$('#backToTop').fadeIn(300)} else {$('#backToTop').fadeOut(300)} });
 		$('#backToTop').click(function() {window.scrollTo({ top: 0, behavior: 'smooth' });});
