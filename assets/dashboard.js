@@ -107,6 +107,16 @@ $(document).ready(function() {
 			var color = (val<=0)?'#ffffff':(val<100000)?'#fbf2c4':(val<500000)?'#ffc15d':(val<1000000)?'#eb99ad':(val<2000000)?'#369acc':(val<5000000)?'#9b92b5':(val<10000000)?'#667762':'#003f5c';
 			$(this).css('fill', color);
 		});
+		$('path').each(function() {
+			var stateName = $(this).attr('title');
+			var index = stateTotal[0].indexOf(stateName);
+			var qty = stateTotal[1][index];
+			var qtyText = (qty>=10000000)?(qty/10000000).toFixed(2)+'Cr':qty>=100000?(qty/100000).toFixed(2)+'L':qty>=1000?(qty/1000).toFixed(2)+'K':qty;
+			var text = document.createElementNS("http://www.w3.org/2000/svg","text");
+			$(text).attr({"x":$(this).attr('x'),"y":$(this).attr('y'),"text-anchor":"middle","dominant-baseline":"middle","font-size":"12","fill":"#fff"});
+			text.textContent = qtyText;
+			$('#mapIndia').append(text);
+		});
 		var stateData = [data[18].slice(3,-1)];
 		[19,20,21,22,23,24,25,26,27].forEach(idx => { stateData.push(data[idx].slice(3,-1).map((ele)=>{return intVal(ele)})); });
 		var hoverData = [];
