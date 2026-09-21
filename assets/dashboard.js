@@ -111,9 +111,9 @@ $(document).ready(function() {
 			var stateName = $(this).attr('title');
 			var index = stateTotal[0].indexOf(stateName);
 			var qty = stateTotal[1][index];
-			var [qtyText,color] = qty>=10000000?[(qty/10000000).toFixed(2)+'Cr','#fff']:qty>=100000?[(qty/100000).toFixed(2)+'L','#000']:qty>=1000?[(qty/1000).toFixed(2)+'K','#000']:[qty,'#000'];
+			var qtyText = qty>=10000000?(qty/10000000).toFixed(2)+'Cr':qty>=100000?(qty/100000).toFixed(2)+'L':qty>=1000?(qty/1000).toFixed(2)+'K':qty;
 			var text = document.createElementNS("http://www.w3.org/2000/svg","text");
-			$(text).attr({"x":$(this).attr('x'),"y":$(this).attr('y'),"text-anchor":"middle","dominant-baseline":"middle","font-size":"14","font-weight":"600","fill":"#fff","-webkit-text-stroke":"1px black","cursor":"pointer"});
+			$(text).attr({"x":$(this).attr('x'),"y":$(this).attr('y'),"text-anchor":"middle","dominant-baseline":"middle","font-size":"15","font-weight":"600","fill":"#fff","filter":"drop-shadow(0 0 1px black);","cursor":"pointer"});
 			text.textContent = qtyText;
 			$('#mapIndia').append(text);
 		});
