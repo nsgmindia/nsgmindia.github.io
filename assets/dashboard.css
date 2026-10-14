@@ -52,7 +52,7 @@ h4 { margin: 5px 0; font-size: 18px; }
 path { fill: #cbd5e1; stroke: #fff; stroke-width: 1.2; transition: 0.25s; }
 path:hover { fill: #2563eb !important; cursor: pointer; filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.4)); }
 .infoBox { position: absolute; pointer-events:none; max-width: 400px; background: #fff; font-size: 12px; padding: 10px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); display: none; z-index: 99; }
-.abbr { text-align: center; font-size: 11px; }
+.abbr { text-align: center; font-size: 11px; max-width: 80%; }
 table { font-size: 11px; }
 td, th { padding: 2px !important; }
 .table-container { display: flex; gap: 5px; width: 100%; margin: 5px auto; }
