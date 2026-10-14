@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Download Deployment Statistics</title>
+	<link rel="stylesheet" type="text/css" href="assets/dashboard.css">
+</head>
+<body>
+	<div class="flex-row">
+		<div class="header">⚡ Smart Meter Deployments in India ⚡</div>
+	</div>
+	<div class="flex-row">
+		<div class="flex-column">
+			<h2 class="warning">Download Past Deployment Statistics</h2>
+			<h4 class="text-center">Select one or more months to download past cumulative deployment statistics.</h4>
+			<div class="text-center">
+				<button class="blues" id="selectAllBtn">Select All</button>
+				<button class="danger" id="clearBtn">Clear</button>
+			</div>
+			<div class="text-center">
+				<select id="monthList" multiple></select>
+			</div>
+			<div class="text-center">
+				<button class="success" id="downloadBtn">Download Data</button>
+			</div>
+			<div class="text-center">
+				<div class="text-center" id="status"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="assets/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="assets/xlsx-0.18.5.full.min.js"></script>
+	<script type="text/javascript" src="assets/select2-4.1.0.min.js"></script>
+	<script>
+		var url = "https://docs.google.com/spreadsheets/d/1D4h9NnRiN1xv_TlL1TPcP4JucF12W_Qy9dOjOqrCLGk/export?format=xlsx";
+		let sourceWorkbook = null;
+		function setStatus(message){$("#status").html(message);}
+		async function loadWorkbook(){
+			try{		
+				setStatus("Loading ...");		
+				var response = await fetch(url);		
+				if(!response.ok){throw new Error("Unable to access data.");}
+				var buffer = await response.arrayBuffer();		
+				sourceWorkbook = XLSX.read(buffer,{type:"array"});
+				populateMonths();		
+				setStatus(sourceWorkbook.SheetNames.length+" month(s) loaded.");
+			}
+			catch(error){console.error(error); setStatus("Error loading data.");}
+		}		
+		function populateMonths(){		
+			var select = $("#monthList");
+			select.empty();
+			sourceWorkbook.SheetNames.forEach(function(sheetName){select.append(`<option value="${sheetName}">${sheetName}</option>`);});
+			select.select2({placeholder:"Select Month(s)",allowClear:true});
+		}		
+		$("#selectAllBtn").click(function(){		
+			var allValues = [];
+			$("#monthList option").each(function(){allValues.push($(this).val());});
+			$("#monthList").val(allValues).trigger("change");
+		});
+		$("#clearBtn").click(function(){$("#monthList").val(null).trigger("change");});		
+		$("#downloadBtn").click(function(){		
+			var selectedSheets = $("#monthList").val();		
+			if(!selectedSheets || selectedSheets.length === 0){alert("Please select at least one month."); return;}
+			setStatus("Generating Workbook...");		
+			var newWorkbook = XLSX.utils.book_new();		
+			selectedSheets.forEach(function(sheetName){		
+				var worksheet = sourceWorkbook.Sheets[sheetName];
+				XLSX.utils.book_append_sheet(newWorkbook,worksheet,sheetName);
+			});
+			var now = new Date().toLocaleString('sv-SE',{timeZone:'Asia/Kolkata'}).replace(/\D/g,'');
+			XLSX.writeFile(newWorkbook,"Smart_Metering_Statistics_History_" +now+".xlsx");
+			setStatus("Download Successful.");
+		});
+		$(document).ready(function(){loadWorkbook();});
+	</script>
+</body>
+</html>
