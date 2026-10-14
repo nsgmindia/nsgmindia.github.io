@@ -6,20 +6,29 @@
 	<meta name="description" content="Download Deployment Statistics">
 	<link rel="icon" type="image/x-icon" href="assets/favicon.png">
 	<title>Download Deployment Statistics</title>
+	<link rel="stylesheet" type="text/css" href="assets/select2-4.1.0.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/pastdata.css">
 </head>
 <body>
-	<div class="container">
-		<div class="card">
-			<h2>Download Past Deployment Statistics</h2>
-			<p>Select one or more months to download past cumulative deployment statistics.</p>
-			<div class="toolbar">
-				<button class="secondary" id="selectAllBtn">Select All</button>
-				<button class="secondary" id="clearBtn">Clear</button>
+	<div class="flex-row">
+		<div class="header">⚡ Smart Meter Deployments in India ⚡</div>
+	</div>
+	<div class="flex-row">
+		<div class="flex-column">
+			<div class="text-center">
+				<h4 class="warning">Smart Consumer Metering</h4>
+				<p>Select one or more months to download past cumulative deployment statistics.</p>
 			</div>
-			<select id="monthList" multiple></select>
-			<br><br>
-			<button class="success" id="downloadBtn">Download Data</button>
+			<div class="text-center">
+				<button class="blues" id="selectAllBtn">Select All</button>
+				<button class="danger" id="clearBtn">Clear</button>
+			</div>
+			<div class="text-center">
+				<select id="monthList" multiple></select>
+			</div>
+			<div class="text-center">
+				<button class="success" id="downloadBtn">Download Data</button>
+			</div>
 			<div id="status"></div>
 		</div>
 	</div>
