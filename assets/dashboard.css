@@ -7,7 +7,7 @@ body { font-family: Montserrat, Arial, sans-serif; background: linear-gradient(1
 .box { background: white; width: 350px; margin: 15% auto; padding: 10px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; }
 .url-container { display: flex; margin: 10px 0; width: 330px; align-items: center; }
 .url-container input { flex: 1; padding: 5px; border: 1px solid #ccc; border-right: none; }
-button { padding: 5px; border: 1px solid #ccc; background: #f4f4f4; cursor: pointer; font-size: 16px; font-weight: bold; }
+button { padding: 5px; border: 1px solid #ccc; background: #f4f4f4; cursor: pointer; font-size: 16px; font-weight: bold; font-family: inherit; }
 #download, #print { cursor: pointer; }
 @media print { #popup, #share, #backToTop { display: none !important; } }
 .progress { width: 100%; height: 40px; margin: auto; overflow: hidden; border-radius: 10px; }
@@ -52,7 +52,7 @@ h4 { margin: 5px 0; font-size: 18px; }
 path { fill: #cbd5e1; stroke: #fff; stroke-width: 1.2; transition: 0.25s; }
 path:hover { fill: #2563eb !important; cursor: pointer; filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.4)); }
 .infoBox { position: absolute; pointer-events:none; max-width: 400px; background: #fff; font-size: 12px; padding: 10px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); display: none; z-index: 99; }
-.abbr { text-align: center; font-size: 11px; max-width: 80%; }
+.abbr { text-align: center; font-size: 12px; margin: auto 20px; }
 table { font-size: 11px; }
 td, th { padding: 2px !important; }
 .table-container { display: flex; gap: 5px; width: 100%; margin: 5px auto; }
@@ -94,4 +94,4 @@ ol { padding-inline-start: 10px; margin-block-start: 0px; margin-block-end: 0px;
 .footer { display: none; }
 #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 99; display: none; width: 50px; height: 50px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 25px; font-weight: bolder; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; }
 #backToTop:hover { background: #007bff; transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);}
-.select2-container{ width: 600px !important; }
+.select2-container{ width:100% !important; }
